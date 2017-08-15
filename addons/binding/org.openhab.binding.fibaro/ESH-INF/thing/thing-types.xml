@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="fibaro"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+    <!-- Actor Thing Type -->
+    <thing-type id="actor">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="gateway" />
+        </supported-bridge-type-refs>
+        <label>Actor</label>
+        <description>A Fibaro Actor device i.e. a device which supports altering its value/state. This could for example be a switch, a dimmer or a thermostat. The Actor thing supports a variety of channels. If this is a switch, enable the switch channel. By default only the dead channel is active indicating id this z-wave device is marked dead by the controller.</description>
+
+        <channels>
+            <channel id="alarm" typeId="alarm"/>
+            <channel id="battery" typeId="battery"/>            
+            <channel id="dead" typeId="dead"/>
+            <channel id="dimmer" typeId="dimmer"/>
+            <channel id="energy" typeId="energy"/>
+            <channel id="power" typeId="power"/>
+            <channel id="power-outlet" typeId="power-outlet"/>
+            <channel id="switch" typeId="switch"/>            
+            <channel id="thermostat" typeId="thermostat"/>                                   
+        </channels>
+        
+        <config-description>
+            <parameter name="id" type="integer" min="1" required="true">
+                <label>Device id</label>
+                <description>The z-wave device id on the Fibaro controller</description>
+            </parameter>
+            
+        </config-description>        
+    </thing-type>
+    
+    <!-- Sensor Thing Type -->
+    <thing-type id="sensor">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="gateway" />
+        </supported-bridge-type-refs>
+        <label>Sensor</label>
+        <description>A Fibaro sensor i.e. a read only device. This could for example be a motion, temperature or door/window sensor. The Sensor thing supports a variety of channels. If this is a temperature sensor, enable the temperature channel. By default only the dead channel is active indicating id this z-wave device is marked dead by the controller.</description>
+
+        <channels>
+            <channel id="battery" typeId="battery"/>
+            <channel id="dead" typeId="dead"/>
+            <channel id="door" typeId="door"/>
+            <channel id="electric-current" typeId="electric-current"/>
+            <channel id="energy" typeId="energy"/>
+            <channel id="heat" typeId="heat"/>
+            <channel id="illuminance" typeId="illuminance"/>
+            <channel id="motion" typeId="motion"/>
+            <channel id="power" typeId="power"/>
+            <channel id="smoke" typeId="smoke"/>
+            <channel id="temperature" typeId="temperature"/>
+            <channel id="voltage" typeId="voltage"/>
+            <channel id="window" typeId="window"/>            
+        </channels>
+        
+        <config-description>
+            <parameter name="id" type="integer" min="1" required="true">
+                <label>Device id</label>
+                <description>The z-wave device id on the Fibaro controller</description>
+            </parameter>
+            
+        </config-description>        
+    </thing-type>    
+        
+    <channel-type id="alarm" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Alarm</label>
+        <description>Controls an alarm such as a siren</description>
+        <category>Alarm</category>        
+    </channel-type>
+
+    <channel-type id="battery" advanced="true">
+        <item-type>Number</item-type>
+        <label>Battery level</label>
+        <description>Reads current battery level (in %) of a device</description>
+        <category>Battery</category>     
+        <state readOnly="true" min="1" max="100" pattern="%d %%"/>  
+    </channel-type>
+
+    <channel-type id="dead">
+        <item-type>Switch</item-type>
+        <label>Dead</label>
+        <description>Reads device dead status (i.e. device is configured but not reachable from the gateway)</description>
+        <state readOnly="true"></state>
+    </channel-type>
+
+    <channel-type id="dimmer" advanced="true">
+        <item-type>Dimmer</item-type>
+        <label>Dimmer</label>
+        <description>Controls a dimmer</description>
+        <category>DimmableLight</category>
+    </channel-type>
+
+    <channel-type id="door" advanced="true">
+        <item-type>Contact</item-type>
+        <label>Door</label>
+        <description>Reads door sensor value</description>
+        <state readOnly="true"/>
+    </channel-type>
+
+    <channel-type id="electric-current" advanced="true">
+        <item-type>Number</item-type>
+        <label>Electric current</label>
+        <description>Reads the electric current (in A) of a device</description>
+        <category>Energy</category>
+        <state readOnly="true" pattern="%.2f A"/>
+    </channel-type>    
+
+    <channel-type id="energy" advanced="true">
+        <item-type>Number</item-type>
+        <label>Energy</label>
+        <description>Reads the total energy consumption (in kWh) of this device</description>
+        <category>Energy</category>
+        <state readOnly="true" pattern="%.2f kWh"/>
+    </channel-type>
+    
+    <channel-type id="heat" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Heat</label>
+        <description>Reads heat sensor value (from a smoke sensor for example)</description>
+        <category>Fire</category>
+        <state readOnly="true"/>
+    </channel-type>
+
+    <channel-type id="illuminance" advanced="true">
+        <item-type>Number</item-type>
+        <label>Illuminance</label>
+        <description>Reads the illuminance (in lux) of this device</description>
+        <category>Light</category>
+        <state readOnly="true" min="0" pattern="%.0f lux"/>
+    </channel-type>
+
+    <channel-type id="motion" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Motion</label>
+        <description>Reads motion sensor value</description>
+        <category>Motion</category>
+        <state readOnly="true"/>
+    </channel-type>
+
+    <channel-type id="power" advanced="true">
+        <item-type>Number</item-type>
+        <label>Power</label>
+        <description>Reads the current power usage (in W) of this device</description>
+        <category>Energy</category>
+        <state readOnly="true" pattern="%.2f W"/>
+    </channel-type>
+    
+    <channel-type id="power-outlet" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Power outlet</label>
+        <description>Controls a power outlet</description>
+        <category>PowerOutlet</category>        
+    </channel-type>
+
+    <channel-type id="smoke" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Smoke</label>
+        <description>Reads smoke sensor value</description>
+        <category>Fire</category>
+        <state readOnly="true"/>
+    </channel-type>
+    
+    <channel-type id="switch" advanced="true">
+        <item-type>Switch</item-type>
+        <label>Switch</label>
+        <description>Controls a binary switch</description>
+        <category>Switch</category>        
+    </channel-type>
+
+    <channel-type id="temperature" advanced="true">
+        <item-type>Number</item-type>
+        <label>Temperature</label>
+        <description>Reads the current temperature (in °C) of this device</description>
+        <category>Temperature</category>
+        <state readOnly="true" pattern="%.1f °C"/>
+    </channel-type>
+    
+    <channel-type id="thermostat" advanced="true">
+        <item-type>Number</item-type>
+        <label>Thermostat</label>
+        <description>Channel to control the temperature in a thermostat device</description>
+        <category>Temperature</category>
+        <state pattern="%.1f °C"/>
+    </channel-type>
+
+    <channel-type id="voltage" advanced="true">
+        <item-type>Number</item-type>
+        <label>Voltage</label>
+        <description>Reads the current voltage (in V) of this device</description>
+        <category>Energy</category>
+        <state readOnly="true" pattern="%.2f V"/>
+    </channel-type>
+
+    <channel-type id="window" advanced="true">
+        <item-type>Contact</item-type>
+        <label>Window</label>
+        <description>Reads window sensor value</description>
+        <state readOnly="true"/>
+    </channel-type>
+    
+</thing:thing-descriptions>
